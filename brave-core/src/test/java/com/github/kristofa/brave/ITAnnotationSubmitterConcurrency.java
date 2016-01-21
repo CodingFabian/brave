@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.kristofa.brave.SpanAndEndpoint.StaticSpanAndEndpoint;
-import com.twitter.zipkin.gen.Span;
+import zipkin.Span;
 
 /**
  * This isSampled proves that we have proper synchronisation when submitted annotations for the same span. Without proper

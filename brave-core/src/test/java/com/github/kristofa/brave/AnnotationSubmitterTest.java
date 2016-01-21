@@ -1,11 +1,11 @@
 package com.github.kristofa.brave;
 
 import com.github.kristofa.brave.SpanAndEndpoint.StaticSpanAndEndpoint;
-import com.twitter.zipkin.gen.Annotation;
-import com.twitter.zipkin.gen.AnnotationType;
-import com.twitter.zipkin.gen.BinaryAnnotation;
-import com.twitter.zipkin.gen.Endpoint;
-import com.twitter.zipkin.gen.Span;
+import zipkin.Annotation;
+import zipkin.AnnotationType;
+import zipkin.BinaryAnnotation;
+import zipkin.Endpoint;
+import zipkin.Span;
 
 import org.junit.Before;
 import org.junit.Test;

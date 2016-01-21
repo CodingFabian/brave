@@ -2,13 +2,13 @@ package com.github.kristofa.brave;
 
 import com.github.kristofa.brave.SpanAndEndpoint.LocalSpanAndEndpoint;
 import com.google.auto.value.AutoValue;
-import com.twitter.zipkin.gen.BinaryAnnotation;
-import com.twitter.zipkin.gen.Span;
-import com.twitter.zipkin.gen.zipkinCoreConstants;
+import zipkin.BinaryAnnotation;
+import zipkin.Span;
+import zipkin.Constants;
 
 import java.util.Random;
 
-import static com.twitter.zipkin.gen.zipkinCoreConstants.LOCAL_COMPONENT;
+import static zipkin.Constants.LOCAL_COMPONENT;
 
 /**
  * Local tracer is designed for in-process activity that explains latency.
@@ -78,7 +78,6 @@ public abstract class LocalTracer extends AnnotationSubmitter {
     public SpanId startNewSpan(String component, String operation) {
         SpanId spanId = startNewSpan(component, operation, currentTimeMicroseconds());
         if (spanId == null) return null;
-        spanAndEndpoint().span().startTick = System.nanoTime(); // embezzle start tick into an internal field.
         return spanId;
     }
 
@@ -89,7 +88,7 @@ public abstract class LocalTracer extends AnnotationSubmitter {
             return SpanId.create(newSpanId, newSpanId, null);
         }
 
-        return SpanId.create(currentServerSpan.getTrace_id(), newSpanId, currentServerSpan.getId());
+        return SpanId.create(currentServerSpan.traceId, newSpanId, currentServerSpan.id);
     }
 
     /**
@@ -118,16 +117,14 @@ public abstract class LocalTracer extends AnnotationSubmitter {
             }
         }
 
-        Span newSpan = new Span();
-        newSpan.setId(newSpanId.getSpanId());
-        newSpan.setTrace_id(newSpanId.getTraceId());
-        if (newSpanId.getParentSpanId() != null) {
-            newSpan.setParent_id(newSpanId.getParentSpanId());
-        }
-        newSpan.setName(operation);
-        newSpan.setTimestamp(timestamp);
-        newSpan.addToBinary_annotations(
-            new BinaryAnnotation(LOCAL_COMPONENT, component, spanAndEndpoint().endpoint()));
+        Span newSpan = new Span.Builder()
+        		.traceId(newSpanId.getTraceId())
+        		.id(newSpanId.getSpanId())
+        		.parentId(newSpanId.getParentSpanId())
+        		.name(operation)
+        		.timestamp(timestamp)
+        		.addBinaryAnnotation(BinaryAnnotation.create(LOCAL_COMPONENT, component, spanAndEndpoint().endpoint()))
+        		.build();
         spanAndEndpoint().state().setCurrentLocalSpan(newSpan);
         return newSpanId;
     }
@@ -136,19 +133,10 @@ public abstract class LocalTracer extends AnnotationSubmitter {
      * Completes the span, assigning the most precise duration possible.
      */
     public void finishSpan() {
-        long endTick = System.nanoTime();
-
         Span span = spanAndEndpoint().span();
         if (span == null) return;
 
-        Long startTick = span.startTick;
-        final long duration;
-        if (startTick != null) {
-            duration = (endTick - startTick) / 1000;
-        } else {
-            duration = currentTimeMicroseconds() - span.getTimestamp();
-        }
-        finishSpan(duration);
+        finishSpan(currentTimeMicroseconds() - span.timestamp);
     }
 
     /**
@@ -158,11 +146,7 @@ public abstract class LocalTracer extends AnnotationSubmitter {
         Span span = spanAndEndpoint().span();
         if (span == null) return;
 
-        synchronized (span) {
-            span.setDuration(duration);
-            spanCollector().collect(span);
-        }
-
+        spanCollector().collect(new Span.Builder(span).duration(duration).build());
         spanAndEndpoint().state().setCurrentLocalSpan(null);
     }
 

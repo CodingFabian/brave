@@ -18,12 +18,12 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import com.twitter.zipkin.gen.Annotation;
-import com.twitter.zipkin.gen.AnnotationType;
-import com.twitter.zipkin.gen.BinaryAnnotation;
-import com.twitter.zipkin.gen.Endpoint;
-import com.twitter.zipkin.gen.Span;
-import com.twitter.zipkin.gen.zipkinCoreConstants;
+import zipkin.Annotation;
+import zipkin.AnnotationType;
+import zipkin.BinaryAnnotation;
+import zipkin.Endpoint;
+import zipkin.Span;
+import zipkin.zipkinCoreConstants;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(AnnotationSubmitter.class)

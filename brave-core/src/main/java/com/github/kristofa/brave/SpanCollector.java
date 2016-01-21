@@ -1,6 +1,6 @@
 package com.github.kristofa.brave;
 
-import com.twitter.zipkin.gen.Span;
+import zipkin.Span;
 
 /**
  * Collects spans that are submitted by {@link ServerTracer} and {@link ClientTracer}. We can have implementations that

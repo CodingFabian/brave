@@ -5,7 +5,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.junit.Test;
 
-import com.twitter.zipkin.gen.Span;
+import zipkin.Span;
 
 public class EmptySpanCollectorTest {
 

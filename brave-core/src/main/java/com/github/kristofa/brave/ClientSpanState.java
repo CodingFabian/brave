@@ -1,8 +1,8 @@
 package com.github.kristofa.brave;
 
 import com.github.kristofa.brave.internal.Nullable;
-import com.twitter.zipkin.gen.Endpoint;
-import com.twitter.zipkin.gen.Span;
+import zipkin.Endpoint;
+import zipkin.Span;
 
 /**
  * Maintains state for a single client span.

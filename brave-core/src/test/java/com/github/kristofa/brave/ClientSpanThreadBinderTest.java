@@ -1,6 +1,6 @@
 package com.github.kristofa.brave;
 
-import com.twitter.zipkin.gen.Span;
+import zipkin.Span;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;

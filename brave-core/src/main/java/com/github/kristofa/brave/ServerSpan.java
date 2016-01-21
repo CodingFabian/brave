@@ -3,7 +3,8 @@ package com.github.kristofa.brave;
 import com.github.kristofa.brave.internal.Nullable;
 import com.google.auto.value.AutoValue;
 
-import com.twitter.zipkin.gen.Span;
+import zipkin.Span;
+
 
 /**
  * The ServerSpan is initialized by {@link ServerTracer} and keeps track of Trace/Span state of our service request.
@@ -47,13 +48,7 @@ public abstract class ServerSpan {
      * @param name Span name. Should be lowercase and not <code>null</code> or empty.
      */
      static ServerSpan create(long traceId, long spanId, @Nullable Long parentSpanId, String name) {
-        Span span = new Span();
-        span.setTrace_id(traceId);
-        span.setId(spanId);
-        if (parentSpanId != null) {
-            span.setParent_id(parentSpanId);
-        }
-        span.setName(name);
+        Span span = new Span.Builder().traceId(traceId).id(spanId).parentId(parentSpanId).name(name).build();
         return create(span, true);
     }
 

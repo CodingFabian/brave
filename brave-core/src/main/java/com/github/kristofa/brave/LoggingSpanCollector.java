@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.twitter.zipkin.gen.BinaryAnnotation;
-import com.twitter.zipkin.gen.Span;
+import zipkin.BinaryAnnotation;
+import zipkin.Span;
 
 import static com.github.kristofa.brave.internal.Util.checkNotBlank;
 import static com.github.kristofa.brave.internal.Util.checkNotNull;
@@ -56,7 +56,7 @@ public class LoggingSpanCollector implements SpanCollector {
      */
     @Override
     public void addDefaultAnnotation(final String key, final String value) {
-        defaultAnnotations.add(new BinaryAnnotation(key, value));
+        defaultAnnotations.add(BinaryAnnotation.create(key, value, null));
     }
 
     Logger getLogger() {

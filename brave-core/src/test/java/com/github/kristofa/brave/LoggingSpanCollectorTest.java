@@ -14,9 +14,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
 
-import com.twitter.zipkin.gen.AnnotationType;
-import com.twitter.zipkin.gen.BinaryAnnotation;
-import com.twitter.zipkin.gen.Span;
+import zipkin.AnnotationType;
+import zipkin.BinaryAnnotation;
+import zipkin.Span;
 
 public class LoggingSpanCollectorTest {
 

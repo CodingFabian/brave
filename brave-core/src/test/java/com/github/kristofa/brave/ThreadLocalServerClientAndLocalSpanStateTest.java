@@ -9,8 +9,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.twitter.zipkin.gen.Endpoint;
-import com.twitter.zipkin.gen.Span;
+import zipkin.Endpoint;
+import zipkin.Span;
 
 public class ThreadLocalServerClientAndLocalSpanStateTest {
 

@@ -1,6 +1,6 @@
 package com.github.kristofa.brave;
 
-import com.twitter.zipkin.gen.Span;
+import zipkin.Span;
 
 /**
  * A {@link SpanCollector} implementation that does nothing with collected spans.

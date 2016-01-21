@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
-import com.twitter.zipkin.gen.Span;
+import zipkin.Span;
 
 /**
  * Integration isSampled for Brave api. Tests submitting server/client spans in parallel threads. Each thread represents a

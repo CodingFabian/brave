@@ -1,7 +1,5 @@
 package com.github.kristofa.brave;
 
-import com.twitter.zipkin.gen.zipkinCoreConstants;
-
 /**
  * Annotations that add to the {@link zipkinCoreConstants}.
  * 

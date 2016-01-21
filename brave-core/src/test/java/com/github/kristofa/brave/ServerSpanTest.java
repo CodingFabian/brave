@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.twitter.zipkin.gen.Span;
+import zipkin.Span;
 
 public class ServerSpanTest {
 

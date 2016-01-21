@@ -1,8 +1,8 @@
 package com.github.kristofa.brave;
 
 import com.github.kristofa.brave.internal.Util;
-import com.twitter.zipkin.gen.Endpoint;
-import com.twitter.zipkin.gen.Span;
+import zipkin.Endpoint;
+import zipkin.Span;
 
 import java.net.InetAddress;
 
@@ -41,7 +41,7 @@ public final class ThreadLocalServerClientAndLocalSpanState implements ServerCli
     public ThreadLocalServerClientAndLocalSpanState(InetAddress ip, int port, String serviceName) {
         Util.checkNotNull(ip, "ip address must be specified.");
         Util.checkNotBlank(serviceName, "Service name must be specified.");
-        endpoint = new Endpoint(InetAddressUtilities.toInt(ip), (short) port, serviceName);
+        endpoint = Endpoint.create(serviceName, InetAddressUtilities.toInt(ip), (short) port);
     }
 
     /**
@@ -53,7 +53,7 @@ public final class ThreadLocalServerClientAndLocalSpanState implements ServerCli
      */
     public ThreadLocalServerClientAndLocalSpanState(int ip, int port, String serviceName) {
         Util.checkNotBlank(serviceName, "Service name must be specified.");
-        endpoint = new Endpoint(ip, (short) port, serviceName);
+        endpoint = Endpoint.create(serviceName, ip, (short) port);
     }
 
     /**
@@ -90,7 +90,7 @@ public final class ThreadLocalServerClientAndLocalSpanState implements ServerCli
         if (serviceName == null) {
             return endpoint;
         } else {
-            return new Endpoint(endpoint).setService_name(serviceName);
+            return new Endpoint.Builder(endpoint).serviceName(serviceName).build();
         }
     }
 
